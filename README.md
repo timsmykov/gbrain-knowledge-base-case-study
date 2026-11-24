@@ -6,7 +6,7 @@ I deployed two [Gbrain](https://github.com/garrytan/gbrain) instances, configure
 
 ## Two knowledge bases
 
-![Two separate Gbrain deployments. Personal Drive files and meeting transcripts feed the personal PostgreSQL-backed instance. Work documents and approved excerpts feed the Veracto instance. Each deployment serves its assigned agents through MCP.](assets/gbrain-architecture.png)
+![Personal Google Drive files and transcripts go through text extraction and OCR where needed. Work documents and approved recordings go to the separate Veracto deployment. Each Gbrain instance has its own PostgreSQL database and serves its assigned agents via MCP.](assets/gbrain-architecture-detailed.png)
 
 | | Personal | Veracto |
 | --- | --- | --- |
@@ -18,7 +18,7 @@ The two installations have separate PostgreSQL databases. Full transcripts colle
 
 ## From meeting to client brief
 
-![An approved transcript goes to the Gbrain meeting worker. The worker saves a meeting note and links it to Notion CRM when the client match is confirmed. An OpenBot agent uses the meeting note and the CRM record to prepare a brief.](assets/meeting-to-client-brief.png)
+![Approved excerpts from the personal source and approved transcripts from the Notion registry enter the Gbrain meeting queue. The worker deduplicates submissions, extracts agreements and checks citations. OpenBot prepares the brief from the meeting notes and the current CRM fields.](assets/meeting-to-client-brief-detailed.png)
 
 1. **Process the transcript.** A background worker inside Gbrain reads the approved text, extracts decisions and agreements, and checks citations against the transcript.
 2. **Save the outcome.** Gbrain saves the meeting note with a link to the original. Repeated submissions resolve to the same meeting record. When the client record is confirmed, the worker adds a link to the note in Notion CRM.
